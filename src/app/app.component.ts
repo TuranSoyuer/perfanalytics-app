@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AnalyticService } from './service/analytic.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'perfanalytics-app';
+
+  constructor(private analyticService: AnalyticService) {}
 }
