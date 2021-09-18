@@ -1,1 +1,28 @@
-<canvas id="lineChart"></canvas>
+<div class="chart-container">
+  <!--  <ngx-charts-line-chart-->
+  <!--    [gradient]="true"-->
+  <!--    [legendTitle]="'Product Sale Chart'"-->
+  <!--    [legend]="true"-->
+  <!--    [results]="saleData"-->
+  <!--    [showXAxisLabel]="true"-->
+  <!--    [showYAxisLabel]="true"-->
+  <!--    [xAxisLabel]="'Products'"-->
+  <!--    [xAxis]="true"-->
+  <!--    [yAxisLabel]="'Sale'"-->
+  <!--    [yAxis]="true">-->
+  <!--  </ngx-charts-line-chart>-->
+
+  <ngx-charts-line-chart
+    [legend]="true"
+    [results]="data"
+    [showXAxisLabel]="true"
+    [showYAxisLabel]="true"
+    [xAxisLabel]="'Time'"
+    [xAxis]="true"
+    [yAxisLabel]="'TTFB'"
+    [yAxis]="true"
+  >
+  </ngx-charts-line-chart>
+</div>
+
+

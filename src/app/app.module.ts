@@ -5,7 +5,9 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {HttpClientModule} from "@angular/common/http";
 import {DashboardComponent} from "./dashboard/dashboard.component";
-import { LineChartComponent } from './line-chart/line-chart.component';
+import {LineChartComponent} from './line-chart/line-chart.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {NgxChartsModule} from "@swimlane/ngx-charts";
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { LineChartComponent } from './line-chart/line-chart.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    NgxChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
