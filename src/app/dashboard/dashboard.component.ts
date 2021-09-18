@@ -39,8 +39,9 @@ export class DashboardComponent implements OnInit {
       };
 
       siteAnalytics[key].forEach((item: AnalyticItem) => {
+        const createDate = new Date(item.createDate);
         let series: LineChartSeries = {
-          name: item.createDate,
+          name: createDate.getHours().toString() + ":" + createDate.getMinutes().toString(),
           value: item.ttfb
         };
         data.series.push(series);
