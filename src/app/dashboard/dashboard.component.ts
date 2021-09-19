@@ -11,6 +11,9 @@ import {LineChartData, LineChartSeries} from "../line-chart/line-chart.component
 export class DashboardComponent implements OnInit {
   analyticItems: AnalyticItem[] = [];
   ttfbChartData: LineChartData[] = [];
+  fcpChartData: LineChartData[] = [];
+  domLoadChartData: LineChartData[] = [];
+  windowLoadChartData: LineChartData[] = [];
 
   constructor(private analyticService: AnalyticService) {
   }
@@ -20,12 +23,9 @@ export class DashboardComponent implements OnInit {
   }
 
   loadAnalytics(): Subscription {
-    console.log("load analytics");
     return this.analyticService.getAnalytics().subscribe(data => {
-      console.log("data length:" + data.length);
       this.analyticItems = data;
       this.setChartData();
-      // console.log(this.ttfbChartData);
     })
   }
 
@@ -33,23 +33,61 @@ export class DashboardComponent implements OnInit {
     const siteAnalytics = this.groupBy(this.analyticItems, 'siteUrl');
 
     for (const key in siteAnalytics) {
-      let data: LineChartData = {
-        name: key,
-        series: []
-      };
+      let ttfbData: LineChartData = this.initializeChartData(key);
+      let fcpData: LineChartData = this.initializeChartData(key);
+      let domLoadData: LineChartData = this.initializeChartData(key);
+      let windowLoadData: LineChartData = this.initializeChartData(key);
 
       siteAnalytics[key].forEach((item: AnalyticItem) => {
         const createDate = new Date(item.createDate);
-        let series: LineChartSeries = {
-          name: createDate.getHours().toString() + ":" + createDate.getMinutes().toString(),
+        const time = createDate.getHours().toString() + ":" + createDate.getMinutes().toString()
+        let ttfbSeries: LineChartSeries = {
+          name: time,
           value: item.ttfb
         };
-        data.series.push(series);
+        let fcpSeries: LineChartSeries = {
+          name: time,
+          value: item.fcp
+        };
+        let domLoadbSeries: LineChartSeries = {
+          name: time,
+          value: item.domLoad
+        };
+        let windowLoadSeries: LineChartSeries = {
+          name: time,
+          value: item.windowLoad
+        };
+        ttfbData.series.push(ttfbSeries);
+        fcpData.series.push(fcpSeries);
+        domLoadData.series.push(domLoadbSeries);
+        windowLoadData.series.push(windowLoadSeries);
       })
-      this.ttfbChartData.push(data);
-      this.ttfbChartData = [...this.ttfbChartData];
+      this.ttfbChartData.push(ttfbData);
+      this.fcpChartData.push(fcpData);
+      this.domLoadChartData.push(domLoadData);
+      this.windowLoadChartData.push(windowLoadData);
+
     }
+    this.ttfbChartData = [...this.ttfbChartData];
+    this.fcpChartData = [...this.fcpChartData];
+    this.domLoadChartData = [...this.domLoadChartData];
+    this.windowLoadChartData = [...this.windowLoadChartData];
   }
+
+  initializeChartData(key: string): LineChartData {
+    return {
+      name: key,
+      series: []
+    };
+  }
+
+  getChartValueSeries(name: string, value: number): LineChartSeries {
+    return {
+      name: name,
+      value: value
+    };
+  }
+
 
   groupBy(arr: any, key: any) {
     return arr.reduce(function (map: any, currentValue: any) {

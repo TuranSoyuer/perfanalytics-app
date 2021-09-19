@@ -1,18 +1,27 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-12 col-sm-6">
-      <app-line-chart [data]="ttfbChartData">
-
+      <app-line-chart [data]="ttfbChartData"
+                      [yAxisLabel]="'TTFB'">
       </app-line-chart>
     </div>
     <div class="col-xs-12 col-sm-6">
-      <app-line-chart [data]="ttfbChartData">
-
+      <app-line-chart [data]="fcpChartData"
+                      [yAxisLabel]="'FCP'">
       </app-line-chart>
     </div>
+  </div>
 
-    <!--  <div class="col-5 offset-2">-->
-    <!--    <app-line-chart></app-line-chart>-->
-    <!--  </div>-->
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <app-line-chart [data]="domLoadChartData"
+                      [yAxisLabel]="'DOM Load'">
+      </app-line-chart>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <app-line-chart [data]="windowLoadChartData"
+                      [yAxisLabel]="'Window Load'">
+      </app-line-chart>
+    </div>
   </div>
 </div>
