@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AnalyticItem, AnalyticService} from "../service/analytic.service";
 import {Subscription} from "rxjs";
 import {LineChartData, LineChartSeries} from "../line-chart/line-chart.component";
+import {UtilService} from "../util/util.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +31,7 @@ export class DashboardComponent implements OnInit {
   }
 
   setChartData(): void {
-    const siteAnalytics = this.groupBy(this.analyticItems, 'siteUrl');
+    const siteAnalytics = UtilService.groupBy(this.analyticItems, 'siteUrl');
 
     for (const key in siteAnalytics) {
       let ttfbData: LineChartData = this.initializeChartData(key);
@@ -39,24 +40,12 @@ export class DashboardComponent implements OnInit {
       let windowLoadData: LineChartData = this.initializeChartData(key);
 
       siteAnalytics[key].forEach((item: AnalyticItem) => {
-        const createDate = new Date(item.createDate);
-        const time = createDate.getHours().toString() + ":" + createDate.getMinutes().toString()
-        let ttfbSeries: LineChartSeries = {
-          name: time,
-          value: item.ttfb
-        };
-        let fcpSeries: LineChartSeries = {
-          name: time,
-          value: item.fcp
-        };
-        let domLoadbSeries: LineChartSeries = {
-          name: time,
-          value: item.domLoad
-        };
-        let windowLoadSeries: LineChartSeries = {
-          name: time,
-          value: item.windowLoad
-        };
+        const time = UtilService.getHoursMinutes(item.createDate);
+        let ttfbSeries: LineChartSeries = this.getChartValueSeries(time, item.ttfb);
+        let fcpSeries: LineChartSeries = this.getChartValueSeries(time, item.fcp);
+        let domLoadbSeries: LineChartSeries = this.getChartValueSeries(time, item.domLoad);
+        let windowLoadSeries: LineChartSeries = this.getChartValueSeries(time, item.windowLoad);
+
         ttfbData.series.push(ttfbSeries);
         fcpData.series.push(fcpSeries);
         domLoadData.series.push(domLoadbSeries);
@@ -87,14 +76,4 @@ export class DashboardComponent implements OnInit {
       value: value
     };
   }
-
-
-  groupBy(arr: any, key: any) {
-    return arr.reduce(function (map: any, currentValue: any) {
-      (map[currentValue[key]] = map[currentValue[key]] || []).push(currentValue);
-      return map;
-    }, {});
-  };
-
-
 }
