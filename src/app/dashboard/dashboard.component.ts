@@ -41,21 +41,15 @@ export class DashboardComponent implements OnInit {
 
       siteAnalytics[key].forEach((item: AnalyticItem) => {
         const time = UtilService.getHoursMinutes(item.createDate);
-        let ttfbSeries: LineChartSeries = this.getChartValueSeries(time, item.ttfb);
-        let fcpSeries: LineChartSeries = this.getChartValueSeries(time, item.fcp);
-        let domLoadbSeries: LineChartSeries = this.getChartValueSeries(time, item.domLoad);
-        let windowLoadSeries: LineChartSeries = this.getChartValueSeries(time, item.windowLoad);
-
-        ttfbData.series.push(ttfbSeries);
-        fcpData.series.push(fcpSeries);
-        domLoadData.series.push(domLoadbSeries);
-        windowLoadData.series.push(windowLoadSeries);
+        this.addChartValueSeries(ttfbData.series, time, item.ttfb);
+        this.addChartValueSeries(fcpData.series, time, item.fcp);
+        this.addChartValueSeries(domLoadData.series, time, item.domLoad);
+        this.addChartValueSeries(windowLoadData.series, time, item.windowLoad);
       })
       this.ttfbChartData.push(ttfbData);
       this.fcpChartData.push(fcpData);
       this.domLoadChartData.push(domLoadData);
       this.windowLoadChartData.push(windowLoadData);
-
     }
     this.ttfbChartData = [...this.ttfbChartData];
     this.fcpChartData = [...this.fcpChartData];
@@ -70,10 +64,12 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  getChartValueSeries(name: string, value: number): LineChartSeries {
-    return {
-      name: name,
-      value: value
-    };
+  addChartValueSeries(series: LineChartSeries[], name: string, value: number): void {
+    if (value >= 0) {
+      series.push({
+        name: name,
+        value: value
+      });
+    }
   }
 }
