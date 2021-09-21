@@ -13,9 +13,12 @@ export class AnalyticService {
   }
 
   getAnalytics(startDate: number, endDate: number): Observable<AnalyticItem[]> {
-    console.log('getAnalytics ' + startDate + "  " + endDate);
-    return this.http.get<AnalyticItem[]>(this.apiUrl + "/analytics?" +
-      "startDate=" + startDate + "&endDate=" + endDate)
+    let url = this.apiUrl + "/analytics";
+    if (startDate !== null && endDate !== null) {
+      url = this.apiUrl + "/analytics?" + "startDate=" + startDate + "&endDate=" + endDate;
+    }
+
+    return this.http.get<AnalyticItem[]>(url)
     .pipe(
       retry(1),
       catchError(this.handleError)
