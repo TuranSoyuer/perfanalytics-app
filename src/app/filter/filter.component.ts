@@ -9,6 +9,9 @@ import * as _moment from "moment";
 })
 export class FilterComponent implements OnInit {
 
+  currentStartDate!: FormControl;
+  currentEndDate!: FormControl;
+
   public formGroup = new FormGroup({
     startDate: new FormControl(_moment().utc().utcOffset(3).second(0).subtract(30, "minutes"), [Validators.required]),
     endDate: new FormControl(_moment().utc().utcOffset(3).second(0), [Validators.required]),
@@ -20,6 +23,7 @@ export class FilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setCurrentDates();
   }
 
   onSubmit(): void {
@@ -27,5 +31,18 @@ export class FilterComponent implements OnInit {
       startDate: _moment(this.formGroup.value.startDate).valueOf(),
       endDate: _moment(this.formGroup.value.endDate).valueOf()
     });
+    this.setCurrentDates();
+  }
+
+  onCancel(): void {
+    this.formGroup.setValue({
+      startDate: this.currentStartDate,
+      endDate: this.currentEndDate
+    })
+  }
+
+  setCurrentDates(): void {
+    this.currentStartDate = this.formGroup.value.startDate;
+    this.currentEndDate = this.formGroup.value.endDate;
   }
 }
