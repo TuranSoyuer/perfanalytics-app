@@ -20,11 +20,14 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadAnalytics();
+    // todo remove dummy data
+    this.loadAnalytics(null, null);
+    // this.analyticItems = dummyData;
+    // this.setChartData();
   }
 
-  loadAnalytics(): Subscription {
-    return this.analyticService.getAnalytics().subscribe(data => {
+  loadAnalytics(startDate: any, endDate: any): Subscription {
+    return this.analyticService.getAnalytics(startDate, endDate).subscribe(data => {
       this.analyticItems = data;
       this.setChartData();
     })
@@ -70,6 +73,13 @@ export class DashboardComponent implements OnInit {
         name: name,
         value: value
       });
+    }
+  }
+
+  filterSubmit({startDate, endDate}: { startDate: number, endDate: number }) {
+    // console.log(startDate + " " + endDate);
+    if (typeof startDate !== 'undefined' || typeof endDate !== 'undefined') {
+      this.loadAnalytics(startDate, endDate);
     }
   }
 }

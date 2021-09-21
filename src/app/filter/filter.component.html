@@ -1,0 +1,28 @@
+<form (submit)="onSubmit()" [formGroup]="formGroup" class="mb-5">
+  <div class="row">
+    <div class="col-xs-12 col-sm-2 offset-sm-4">
+      <mat-form-field>
+        <input [ngxMatDatetimePicker]="picker1" formControlName="startDate"
+               matInput placeholder="Start Date">
+        <mat-datepicker-toggle [for]="$any(picker1)" matSuffix></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker1 [touchUi]="true"></ngx-mat-datetime-picker>
+      </mat-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-2">
+      <mat-form-field>
+        <input [ngxMatDatetimePicker]="picker2" formControlName="endDate"
+               matInput placeholder="End Date">
+        <mat-datepicker-toggle [for]="$any(picker2)" matSuffix></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #picker2 [touchUi]="true"></ngx-mat-datetime-picker>
+      </mat-form-field>
+    </div>
+
+    <div class="col-xs-12 col-sm-1 ">
+      <button color="primary" mat-raised-button style="width: 100%" type="submit">
+        Update
+      </button>
+    </div>
+  </div>
+
+</form>

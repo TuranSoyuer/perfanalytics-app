@@ -1,4 +1,6 @@
 <div class="container-fluid">
+  <app-filter (submit)="filterSubmit($event)"></app-filter>
+
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <app-line-chart [data]="ttfbChartData"

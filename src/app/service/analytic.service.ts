@@ -12,8 +12,10 @@ export class AnalyticService {
   constructor(private http: HttpClient) {
   }
 
-  getAnalytics(): Observable<AnalyticItem[]> {
-    return this.http.get<AnalyticItem[]>(this.apiUrl + "/analytics")
+  getAnalytics(startDate: number, endDate: number): Observable<AnalyticItem[]> {
+    console.log('getAnalytics ' + startDate + "  " + endDate);
+    return this.http.get<AnalyticItem[]>(this.apiUrl + "/analytics?" +
+      "startDate=" + startDate + "&endDate=" + endDate)
     .pipe(
       retry(1),
       catchError(this.handleError)
