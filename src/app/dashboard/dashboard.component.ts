@@ -36,6 +36,10 @@ export class DashboardComponent implements OnInit {
   }
 
   setChartData(): void {
+    this.ttfbChartData = [];
+    this.fcpChartData = [];
+    this.domLoadChartData = [];
+    this.windowLoadChartData = [];
     const siteAnalytics = UtilService.groupBy(this.analyticItems, 'siteUrl');
 
     for (const key in siteAnalytics) {
