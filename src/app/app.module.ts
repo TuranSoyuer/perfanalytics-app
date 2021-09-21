@@ -8,7 +8,6 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 import {LineChartComponent} from './line-chart/line-chart.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {NgxChartsModule} from "@swimlane/ngx-charts";
-import {DateTimePickerComponent} from './date-time-picker/date-time-picker.component';
 import {
   NGX_MAT_DATE_FORMATS,
   NgxMatDateFormats,
@@ -23,7 +22,7 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import { FilterComponent } from './filter/filter.component';
+import {FilterComponent} from './filter/filter.component';
 
 const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
   parse: {
@@ -42,7 +41,6 @@ const CUSTOM_DATE_FORMATS: NgxMatDateFormats = {
     AppComponent,
     DashboardComponent,
     LineChartComponent,
-    DateTimePickerComponent,
     FilterComponent
   ],
   imports: [
