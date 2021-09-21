@@ -1,4 +1,4 @@
-<form (submit)="onSubmit()" [formGroup]="formGroup" class="mb-5">
+<form [formGroup]="formGroup" class="mb-5">
   <div class="row">
     <div
       class="col-6 col-sm-5 col-md-4 col-lg-3 col-xxl-2 offset-sm-1 offset-md-2 offset-lg-3 offset-xxl-4">
@@ -23,7 +23,8 @@
   <div class="row">
     <div
       class="col-3 col-md-2 col-xxl-1 offset-6 offset-sm-5 offset-md-6 offset-lg-5 offset-xxl-6">
-      <button color="primary" mat-raised-button style="width: 100%" type="submit">
+      <button (click)="onSubmit()" color="primary" mat-raised-button style="width: 100%"
+              type="button">
         Update
       </button>
     </div>

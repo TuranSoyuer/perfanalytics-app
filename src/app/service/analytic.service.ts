@@ -18,7 +18,8 @@ export class AnalyticService {
       url = this.apiUrl + "/analytics?" + "startDate=" + startDate + "&endDate=" + endDate;
     }
 
-    console.log("url: " + url);
+    // console.log("url: " + url);
+
     return this.http.get<AnalyticItem[]>(url)
     .pipe(
       retry(1),
