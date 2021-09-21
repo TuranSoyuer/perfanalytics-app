@@ -27,7 +27,9 @@ export class DashboardComponent implements OnInit {
   }
 
   loadAnalytics(startDate: any, endDate: any): Subscription {
+    this.analyticItems = [];
     return this.analyticService.getAnalytics(startDate, endDate).subscribe(data => {
+      console.log('subscribe data: ' + JSON.stringify(data));
       this.analyticItems = data;
       this.setChartData();
     })
