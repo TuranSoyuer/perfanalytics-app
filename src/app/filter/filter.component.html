@@ -1,7 +1,8 @@
 <form (submit)="onSubmit()" [formGroup]="formGroup" class="mb-5">
   <div class="row">
-    <div class="col-xs-12 col-sm-2 offset-sm-4">
-      <mat-form-field>
+    <div
+      class="col-6 col-sm-5 col-md-4 col-lg-3 col-xxl-2 offset-sm-1 offset-md-2 offset-lg-3 offset-xxl-4">
+      <mat-form-field class="w-100">
         <input [ngxMatDatetimePicker]="picker1" formControlName="startDate"
                matInput placeholder="Start Date">
         <mat-datepicker-toggle [for]="$any(picker1)" matSuffix></mat-datepicker-toggle>
@@ -9,18 +10,27 @@
       </mat-form-field>
     </div>
 
-    <div class="col-xs-12 col-sm-2">
-      <mat-form-field>
+    <div class="col-6 col-sm-5 col-md-4 col-lg-3 col-xxl-2">
+      <mat-form-field class="w-100">
         <input [ngxMatDatetimePicker]="picker2" formControlName="endDate"
                matInput placeholder="End Date">
         <mat-datepicker-toggle [for]="$any(picker2)" matSuffix></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #picker2 [touchUi]="true"></ngx-mat-datetime-picker>
       </mat-form-field>
     </div>
+  </div>
 
-    <div class="col-xs-12 col-sm-1 ">
+  <div class="row">
+    <div
+      class="col-3 col-md-2 col-xxl-1 offset-6 offset-sm-5 offset-md-6 offset-lg-5 offset-xxl-6">
       <button color="primary" mat-raised-button style="width: 100%" type="submit">
         Update
+      </button>
+    </div>
+    <div
+      class="col-3 col-md-2 col-xxl-1">
+      <button color="primary" mat-raised-button style="width: 100%" type="submit">
+        Cancel
       </button>
     </div>
   </div>
