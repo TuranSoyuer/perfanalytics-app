@@ -5,6 +5,7 @@ WORKDIR /app
 COPY package.json /app
 RUN npm install
 COPY . /app
+ENV GENERATE_SOURCEMAP=false
 RUN npm run build --prod
 
 # Stage 2
