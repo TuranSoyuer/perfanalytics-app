@@ -1,6 +1,19 @@
 <div class="container-fluid">
   <app-filter (submit)="filterSubmit($event)"></app-filter>
 
+  <div class="row mt-5">
+    <div class="col-12 col-sm-8 col-lg-6 col-xxl-4">
+      <mat-form-field appearance="fill" class="w-100">
+        <mat-label>Site Url</mat-label>
+        <mat-select (selectionChange)="siteUrlChange($event.value)" [(value)]="selectedSiteUrl">
+          <mat-option *ngFor="let option of siteUrls" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <app-line-chart [data]="ttfbChartData"

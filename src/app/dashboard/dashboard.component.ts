@@ -16,6 +16,10 @@ export class DashboardComponent implements OnInit {
   domLoadChartData: LineChartData[] = [];
   windowLoadChartData: LineChartData[] = [];
 
+  siteUrls: string[] = [];
+
+  selectedSiteUrl!: string;
+
   constructor(private analyticService: AnalyticService) {
   }
 
@@ -27,8 +31,14 @@ export class DashboardComponent implements OnInit {
     this.analyticItems = [];
     return this.analyticService.getAnalytics(startDate, endDate).subscribe(data => {
       this.analyticItems = data;
+      this.setSiteUrlOption();
       this.setChartData();
     })
+  }
+
+  setSiteUrlOption(): void {
+    this.siteUrls = UtilService.distinct(this.analyticItems, 'siteUrl');
+    this.selectedSiteUrl = this.siteUrls[0];
   }
 
   setChartData(): void {
@@ -36,30 +46,25 @@ export class DashboardComponent implements OnInit {
     this.fcpChartData = [];
     this.domLoadChartData = [];
     this.windowLoadChartData = [];
-    const siteAnalytics = UtilService.groupBy(this.analyticItems, 'siteUrl');
+    const selectedSiteAnalytics = this.analyticItems.filter(value => value.siteUrl === this.selectedSiteUrl);
 
-    for (const key in siteAnalytics) {
-      let ttfbData: LineChartData = this.initializeChartData(key);
-      let fcpData: LineChartData = this.initializeChartData(key);
-      let domLoadData: LineChartData = this.initializeChartData(key);
-      let windowLoadData: LineChartData = this.initializeChartData(key);
+    let ttfbData: LineChartData = this.initializeChartData(this.selectedSiteUrl);
+    let fcpData: LineChartData = this.initializeChartData(this.selectedSiteUrl);
+    let domLoadData: LineChartData = this.initializeChartData(this.selectedSiteUrl);
+    let windowLoadData: LineChartData = this.initializeChartData(this.selectedSiteUrl);
 
-      siteAnalytics[key].forEach((item: AnalyticItem) => {
-        const time = UtilService.getHoursMinutes(item.createDate);
-        this.addChartValueSeries(ttfbData.series, time, item.ttfb);
-        this.addChartValueSeries(fcpData.series, time, item.fcp);
-        this.addChartValueSeries(domLoadData.series, time, item.domLoad);
-        this.addChartValueSeries(windowLoadData.series, time, item.windowLoad);
-      })
-      this.ttfbChartData.push(ttfbData);
-      this.fcpChartData.push(fcpData);
-      this.domLoadChartData.push(domLoadData);
-      this.windowLoadChartData.push(windowLoadData);
-    }
-    this.ttfbChartData = [...this.ttfbChartData];
-    this.fcpChartData = [...this.fcpChartData];
-    this.domLoadChartData = [...this.domLoadChartData];
-    this.windowLoadChartData = [...this.windowLoadChartData];
+    selectedSiteAnalytics.forEach((item: AnalyticItem) => {
+      const time = UtilService.getHoursMinutes(item.createDate);
+      this.addChartValueSeries(ttfbData.series, time, item.ttfb);
+      this.addChartValueSeries(fcpData.series, time, item.fcp);
+      this.addChartValueSeries(domLoadData.series, time, item.domLoad);
+      this.addChartValueSeries(windowLoadData.series, time, item.windowLoad);
+    })
+
+    this.ttfbChartData.push(ttfbData);
+    this.fcpChartData.push(fcpData);
+    this.domLoadChartData.push(domLoadData);
+    this.windowLoadChartData.push(windowLoadData);
   }
 
   initializeChartData(key: string): LineChartData {
@@ -82,5 +87,9 @@ export class DashboardComponent implements OnInit {
     if (typeof startDate !== 'undefined' || typeof endDate !== 'undefined') {
       this.loadAnalytics(startDate, endDate);
     }
+  }
+
+  siteUrlChange(value: any) {
+    this.setChartData();
   }
 }

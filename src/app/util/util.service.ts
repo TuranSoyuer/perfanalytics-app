@@ -11,11 +11,13 @@ export class UtilService {
       ("0" + date.getMinutes().toString()).slice(-2);
   }
 
-  /** Group array by key */
-  static groupBy(arr: any, key: any) {
-    return arr.reduce(function (map: any, currentValue: any) {
-      (map[currentValue[key]] = map[currentValue[key]] || []).push(currentValue);
+  /** Find distinct in array by key */
+  static distinct(arr: any, key: any) {
+    return arr.reduce(function (map: any[], currentValue: any) {
+      if (!map.includes(currentValue[key])) {
+        map.push(currentValue[key])
+      }
       return map;
-    }, {});
+    }, []);
   };
 }
